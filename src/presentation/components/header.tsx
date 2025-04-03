@@ -20,7 +20,7 @@ import {
 export const Header = () => {
   return (
     <header
-      className="sticky top-0 z-50 w-full border-b bg-[#0A0A2A]
+      className="sticky top-0 z-50 w-full  bg-[#0A0A2A]
      text-primary-foreground"
     >
       <div className="container flex h-16 items-center justify-between mx-auto px-4">
