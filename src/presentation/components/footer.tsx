@@ -1,22 +1,11 @@
 import Link from "next/link";
-
-const categories = [
-  "World",
-  "Business",
-  "Politics",
-  "Health",
-  "Tech",
-  "Sports",
-] as const;
-
-const companyLinks = ["About", "Contact"] as const;
+import { CATEGORIES, COMPANY_LINKS } from "@/infrastructure";
 
 export const Footer = () => {
   return (
     <footer className="bg-[#1A1A1A] text-white mt-auto">
       <div className="container mx-auto px-4 py-8 lg:py-16">
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-12 gap-8 lg:gap-12">
-          {/* About Section */}
           <div className="sm:col-span-2 lg:col-span-5 flex flex-col gap-4">
             <h4 className="font-semibold text-lg sm:text-xl text-white">
               About FullStory
@@ -28,11 +17,10 @@ export const Footer = () => {
             </p>
           </div>
 
-          {/* Quick Links */}
           <div className="lg:col-span-3 flex flex-col gap-4">
             <h4 className="font-semibold text-white">Categories</h4>
             <nav className="grid grid-cols-2 sm:grid-cols-1 gap-2">
-              {categories.map((item) => (
+              {CATEGORIES.map((item) => (
                 <Link
                   key={item}
                   href={`/${item.toLowerCase()}`}
@@ -44,14 +32,13 @@ export const Footer = () => {
             </nav>
           </div>
 
-          {/* Company */}
           <div className="lg:col-span-2 flex flex-col gap-4">
             <h4 className="font-semibold text-white">Company</h4>
             <nav className="grid grid-cols-2 sm:grid-cols-1 gap-2">
-              {companyLinks.map((item) => (
+              {COMPANY_LINKS.map((item) => (
                 <Link
                   key={item}
-                  href={`/${item.toLowerCase()}`}
+                  href={`/${item.toLowerCase().replace(/\s+/g, "-")}`}
                   className="text-gray-400 hover:text-[#2686EA] transition-colors text-sm py-1"
                 >
                   {item}
@@ -60,7 +47,6 @@ export const Footer = () => {
             </nav>
           </div>
 
-          {/* Newsletter */}
           <div className="sm:col-span-2 lg:col-span-2 flex flex-col gap-4">
             <h4 className="font-semibold text-white">Newsletter</h4>
             <form className="flex flex-col gap-3">
@@ -82,7 +68,6 @@ export const Footer = () => {
           </div>
         </div>
 
-        {/* Bottom Section */}
         <div className="flex flex-col sm:flex-row justify-between items-center gap-4 mt-8 lg:mt-16 pt-8 border-t border-white/10">
           <p className="text-sm text-gray-400">© 2025 All Rights Reserved</p>
           <p className="text-sm text-gray-400">Made with Next.js</p>
