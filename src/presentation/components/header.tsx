@@ -9,9 +9,8 @@ import {
   Sheet,
   SheetTrigger,
   SheetContent,
-  SheetClose,
 } from "@/presentation";
-import { Search, Menu, X } from "lucide-react";
+import { Search, Menu } from "lucide-react";
 import {
   MAIN_NAVIGATION_ITEMS,
   SECONDARY_NAVIGATION_ITEMS,
@@ -20,7 +19,7 @@ import {
 export const Header = () => {
   return (
     <header
-      className="sticky top-0 z-50 w-full  bg-[#0A0A2A]
+      className="sticky top-0 z-50 w-full  bg-[#1A1A1A]
      text-primary-foreground"
     >
       <div className="container flex h-16 items-center justify-between mx-auto px-4">
@@ -62,7 +61,7 @@ export const Header = () => {
             </SheetTrigger>
             <SheetContent
               side="left"
-              className="w-full text-white p-0 bg-[#0A0A2A]"
+              className="w-full text-white p-0 bg-[#1A1A1A]"
             >
               <div className="flex flex-col h-full">
                 <div className="flex items-center justify-between p-4 border-b border-white/10">
@@ -74,10 +73,6 @@ export const Header = () => {
                       height={32}
                     />
                   </Link>
-                  <SheetClose className="rounded-sm opacity-70 ring-offset-background transition-opacity hover:opacity-100 focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2">
-                    <X className="h-6 w-6" />
-                    <span className="sr-only">Close</span>
-                  </SheetClose>
                 </div>
 
                 <div className="flex-1 overflow-y-auto">
