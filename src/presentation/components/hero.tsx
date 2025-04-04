@@ -54,7 +54,7 @@ export const HeroCarousel = () => {
   const currentSlide = slides[currentPage];
 
   return (
-    <section className="min-h-[70vh] lg:min-h-[80vh] w-full relative flex items-end pb-8 sm:pb-12 md:pb-16 overflow-hidden">
+    <section className="min-h-[85vh] w-full relative flex items-end pb-8 sm:pb-12 md:pb-16 overflow-hidden">
       <AnimatePresence initial={false} custom={direction} mode="wait">
         <motion.div
           key={`image-${currentPage}`}
