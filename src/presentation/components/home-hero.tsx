@@ -1,57 +1,24 @@
 "use client";
 
-import { ChevronLeft, ChevronRight, Timer, User } from "lucide-react";
+import { ChevronRight, Timer, User } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import { motion, AnimatePresence } from "framer-motion";
 import { slideAnimation, contentAnimation } from "@/infrastructure";
 import { useCarousel } from "@/domains";
+import { usePosts } from "@/domains/posts/hooks/usePosts";
 
-const slides = [
-  {
-    id: 1,
-    image:
-      "https://images.unsplash.com/photo-1742054294284-baa5691ede46?q=80&w=2787&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-    tag: "Breaking News",
-    title:
-      "China's E-Commerce Marketplaces Connect Citizens and Global Consumers",
-    description:
-      "At the heart of the strategy is a renewed commitment to education, economic development, and cultural preservation. Federal Minister for Indigenous Affairs, Marcia Lawson, outlined a series of measures that include enhanced funding for",
-    author: "David Goggins",
-    readTime: "3 min read",
-  },
-  {
-    id: 2,
-    image:
-      "https://images.unsplash.com/photo-1707343843437-caacff5cfa74?q=80&w=2940&auto=format&fit=crop&ixlib=rb-4.0.3",
-    tag: "Technology",
-    title: "AI Revolution: How Machine Learning is Transforming Industries",
-    description:
-      "Artificial Intelligence continues to reshape how businesses operate, with new breakthroughs in machine learning algorithms leading to unprecedented efficiency gains and innovation across sectors.",
-    author: "Sarah Chen",
-    readTime: "5 min read",
-  },
-  {
-    id: 3,
-    image:
-      "https://images.unsplash.com/photo-1707345512638-997d5c814f88?q=80&w=2940&auto=format&fit=crop&ixlib=rb-4.0.3",
-    tag: "Business",
-    title: "Global Markets Shift: The Rise of Sustainable Investments",
-    description:
-      "Investors worldwide are increasingly focusing on sustainable and ESG-compliant investments, marking a significant shift in global financial markets and corporate responsibility.",
-    author: "Michael Bloomberg",
-    readTime: "4 min read",
-  },
-];
+export const HomeHero = () => {
+  const { posts } = usePosts();
+  const featuredPosts = posts.slice(0, 3); // Pega os 3 primeiros posts para o carrossel
 
-export const HeroCarousel = () => {
-  const { currentPage, direction, progress, paginate, goToSlide } = useCarousel(
-    {
-      totalSlides: slides.length,
-    }
-  );
+  const { currentPage, direction, paginate, goToSlide } = useCarousel({
+    totalSlides: featuredPosts.length,
+  });
 
-  const currentSlide = slides[currentPage];
+  const currentPost = featuredPosts[currentPage];
+
+  if (!currentPost) return null;
 
   return (
     <section className="min-h-[85vh] w-full relative flex items-end pb-8 sm:pb-12 md:pb-16 overflow-hidden">
@@ -71,8 +38,8 @@ export const HeroCarousel = () => {
         >
           <div className="absolute inset-0 bg-gradient-to-r from-black/80 via-black/50 to-transparent z-10"></div>
           <Image
-            src={currentSlide.image}
-            alt={currentSlide.title}
+            src={currentPost.image}
+            alt={currentPost.title}
             fill
             priority
             sizes="(max-width: 640px) 100vw, (max-width: 768px) 100vw, (max-width: 1024px) 100vw, 100vw"
@@ -97,16 +64,19 @@ export const HeroCarousel = () => {
                   custom={1}
                   className="inline-block px-3 sm:px-4 py-1.5 sm:py-2 bg-blue-600/20 text-blue-400 rounded-full text-xs sm:text-sm font-medium mb-4 sm:mb-6"
                 >
-                  {currentSlide.tag}
+                  {currentPost.category.name}
                 </motion.span>
 
-                <Link href="/news/china-ecommerce" className="group block">
+                <Link
+                  href={`/posts/${currentPost.slug}`}
+                  className="group block"
+                >
                   <motion.h1
                     variants={contentAnimation}
                     custom={2}
                     className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold mb-4 sm:mb-6 text-white leading-tight transition-colors duration-300 group-hover:text-[#2686EA]"
                   >
-                    {currentSlide.title}
+                    {currentPost.title}
                   </motion.h1>
                 </Link>
 
@@ -115,7 +85,7 @@ export const HeroCarousel = () => {
                   custom={3}
                   className="text-base sm:text-lg md:text-xl text-gray-200 mb-6 sm:mb-8 max-w-2xl line-clamp-3 sm:line-clamp-none"
                 >
-                  {currentSlide.description}
+                  {currentPost.description}
                 </motion.p>
 
                 <motion.div
@@ -129,7 +99,7 @@ export const HeroCarousel = () => {
                     className="hidden sm:block"
                   >
                     <Link
-                      href="/news/china-ecommerce"
+                      href={`/posts/${currentPost.slug}`}
                       className="flex items-center gap-2"
                     >
                       <motion.span
@@ -141,7 +111,7 @@ export const HeroCarousel = () => {
                         <ChevronRight className="size-3 sm:size-4" />
                       </motion.span>
                       <span className="text-xs sm:text-sm text-white">
-                        Read Story
+                        Ler Artigo
                       </span>
                     </Link>
                   </motion.div>
@@ -151,7 +121,7 @@ export const HeroCarousel = () => {
                     whileTap={{ scale: 0.95 }}
                   >
                     <Link
-                      href="/news/china-ecommerce"
+                      href={`/posts/${currentPost.slug}`}
                       className="flex items-center gap-2"
                     >
                       <motion.span
@@ -163,7 +133,7 @@ export const HeroCarousel = () => {
                         <User className="size-3 sm:size-4" />
                       </motion.span>
                       <span className="text-xs sm:text-sm text-white">
-                        {currentSlide.author}
+                        {currentPost.author.name}
                       </span>
                     </Link>
                   </motion.div>
@@ -173,7 +143,7 @@ export const HeroCarousel = () => {
                     whileTap={{ scale: 0.95 }}
                   >
                     <Link
-                      href="/news/china-ecommerce"
+                      href={`/posts/${currentPost.slug}`}
                       className="flex items-center gap-2"
                     >
                       <motion.span
@@ -185,7 +155,7 @@ export const HeroCarousel = () => {
                         <Timer className="size-3 sm:size-4" />
                       </motion.span>
                       <span className="text-xs sm:text-sm text-white">
-                        {currentSlide.readTime}
+                        {currentPost.readTime}
                       </span>
                     </Link>
                   </motion.div>
@@ -196,70 +166,19 @@ export const HeroCarousel = () => {
 
           <div className="flex items-center gap-4 sm:gap-6 self-end w-full sm:w-auto justify-between sm:justify-end">
             <div className="flex gap-1.5 sm:gap-2">
-              {slides.map((_, index) => (
+              {featuredPosts.map((_, index) => (
                 <div
                   key={index}
-                  className="relative w-6 sm:w-8 h-0.5 rounded-full bg-black/10 overflow-hidden cursor-pointer hover:bg-black/20 transition-colors"
+                  className={`h-1.5 sm:h-2 rounded-full cursor-pointer transition-all duration-300 ${
+                    index === currentPage
+                      ? "w-6 sm:w-8 bg-[#2686EA]"
+                      : "w-1.5 sm:w-2 bg-white/50 hover:bg-white/70"
+                  }`}
                   onClick={() => goToSlide(index)}
-                >
-                  <motion.div
-                    className="absolute inset-0 bg-[#2686EA]/70 origin-left"
-                    initial={false}
-                    animate={{
-                      scaleX: currentPage === index ? progress / 100 : 0,
-                    }}
-                    transition={{
-                      duration: 0.1,
-                      ease: "linear",
-                    }}
-                  />
-                </div>
+                />
               ))}
             </div>
-
-            <div className="flex gap-2 sm:gap-3">
-              <motion.button
-                className="p-1 sm:p-1.5 rounded-full bg-black/5 backdrop-blur-[2px] text-white/70 hover:bg-black/10 hover:text-white transition-all"
-                onClick={() => paginate(-1)}
-                whileHover={{ scale: 1.1 }}
-                whileTap={{ scale: 0.9 }}
-              >
-                <ChevronLeft className="size-3 sm:size-4" />
-              </motion.button>
-              <motion.button
-                className="p-1 sm:p-1.5 rounded-full bg-black/5 backdrop-blur-[2px] text-white/70 hover:bg-black/10 hover:text-white transition-all"
-                onClick={() => paginate(1)}
-                whileHover={{ scale: 1.1 }}
-                whileTap={{ scale: 0.9 }}
-              >
-                <ChevronRight className="size-3 sm:size-4" />
-              </motion.button>
-            </div>
           </div>
-        </div>
-      </div>
-    </section>
-  );
-};
-
-interface HeroProps {
-  title: string;
-  description: string;
-  className?: string;
-}
-
-export const Hero = ({ title, description, className }: HeroProps) => {
-  return (
-    <section
-      className={`min-h-[50vh] w-full relative flex items-end pb-8 sm:pb-12 md:pb-16 overflow-hidden ${className}`}
-    >
-      <div className="absolute inset-0 bg-gradient-to-b from-black/80 via-black/50 to-transparent"></div>
-      <div className="container mx-auto px-4 relative z-20">
-        <div className="max-w-4xl mx-auto text-center">
-          <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold mb-4 text-white">
-            {title}
-          </h1>
-          <p className="text-lg sm:text-xl text-gray-200">{description}</p>
         </div>
       </div>
     </section>

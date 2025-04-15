@@ -1,5 +1,8 @@
+"use client";
+
 import Image from "next/image";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import {
   Input,
   NavigationMenu,
@@ -15,17 +18,29 @@ import {
   MAIN_NAVIGATION_ITEMS,
   SECONDARY_NAVIGATION_ITEMS,
 } from "@/infrastructure";
+import { useState } from "react";
 
 export const Header = () => {
+  const [searchTerm, setSearchTerm] = useState("");
+  const router = useRouter();
+
+  const handleSearch = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (searchTerm.trim()) {
+      router.push(`/?search=${encodeURIComponent(searchTerm.trim())}`);
+      setSearchTerm("");
+    }
+  };
+
   return (
     <header
-      className="sticky top-0 z-50 w-full  bg-[#1A1A1A]
+      className="sticky top-0 z-50 w-full bg-[#1A1A1A]
      text-primary-foreground"
     >
       <div className="container flex h-16 items-center justify-between mx-auto px-4">
         <div className="flex items-center gap-6">
           <Link href="/" className="flex items-center space-x-2">
-            <Image src="/logo.png" alt="FullStory" width={32} height={32} />
+            <Image src="/logo.jpeg" alt="Blog R1" width={32} height={32} />
           </Link>
 
           <NavigationMenu className="hidden md:block">
@@ -44,16 +59,24 @@ export const Header = () => {
         </div>
 
         <div className="flex items-center gap-4">
-          <div className="relative w-40 md:w-80 hidden md:block">
+          <form
+            onSubmit={handleSearch}
+            className="relative w-40 md:w-80 hidden md:block"
+          >
             <Input
               type="text"
-              placeholder="Buscar...."
+              placeholder="Buscar artigos..."
+              value={searchTerm}
+              onChange={(e) => setSearchTerm(e.target.value)}
               className="shadow-none border-none rounded-none bg-white/15"
             />
-            <button className="absolute right-0 top-1/2 -translate-y-1/2 bg-[#2686EA] p-2">
+            <button
+              type="submit"
+              className="absolute right-0 top-1/2 -translate-y-1/2 bg-[#2686EA] p-2"
+            >
               <Search className="size-5" />
             </button>
-          </div>
+          </form>
 
           <Sheet>
             <SheetTrigger className="md:hidden">
@@ -67,8 +90,8 @@ export const Header = () => {
                 <div className="flex items-center justify-between p-4 border-b border-white/10">
                   <Link href="/" className="flex items-center space-x-2">
                     <Image
-                      src="/logo.png"
-                      alt="FullStory"
+                      src="/logo.jpeg"
+                      alt="Blog R1"
                       width={32}
                       height={32}
                     />
@@ -100,16 +123,21 @@ export const Header = () => {
                 </div>
 
                 <div className="p-4 border-t border-white/10">
-                  <div className="relative w-full">
+                  <form onSubmit={handleSearch} className="relative w-full">
                     <Input
                       type="text"
-                      placeholder="Search..."
+                      placeholder="Buscar artigos..."
+                      value={searchTerm}
+                      onChange={(e) => setSearchTerm(e.target.value)}
                       className="w-full bg-[#1A1A3A] border-none shadow-none text-base py-6 pl-4 pr-12"
                     />
-                    <button className="absolute right-3 top-1/2 -translate-y-1/2 bg-[#2686EA] p-2 rounded">
+                    <button
+                      type="submit"
+                      className="absolute right-3 top-1/2 -translate-y-1/2 bg-[#2686EA] p-2 rounded"
+                    >
                       <Search className="size-5" />
                     </button>
-                  </div>
+                  </form>
                 </div>
               </div>
             </SheetContent>
