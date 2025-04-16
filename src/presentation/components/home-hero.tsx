@@ -10,9 +10,9 @@ import { usePosts } from "@/domains/posts/hooks/usePosts";
 
 export const HomeHero = () => {
   const { posts } = usePosts();
-  const featuredPosts = posts.slice(0, 3); // Pega os 3 primeiros posts para o carrossel
+  const featuredPosts = posts.slice(0, 3);
 
-  const { currentPage, direction, paginate, goToSlide } = useCarousel({
+  const { currentPage, direction, goToSlide } = useCarousel({
     totalSlides: featuredPosts.length,
   });
 
