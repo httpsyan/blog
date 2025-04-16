@@ -3,21 +3,8 @@
 import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import {
-  Input,
-  NavigationMenu,
-  NavigationMenuList,
-  NavigationMenuItem,
-  NavigationMenuLink,
-  Sheet,
-  SheetTrigger,
-  SheetContent,
-} from "@/presentation";
+import { Input, Sheet, SheetTrigger, SheetContent } from "@/presentation";
 import { Search, Menu } from "lucide-react";
-import {
-  MAIN_NAVIGATION_ITEMS,
-  SECONDARY_NAVIGATION_ITEMS,
-} from "@/infrastructure";
 import { useState } from "react";
 
 export const Header = () => {
@@ -42,20 +29,6 @@ export const Header = () => {
           <Link href="/" className="flex items-center space-x-2">
             <Image src="/logo.jpeg" alt="Blog R1" width={32} height={32} />
           </Link>
-
-          <NavigationMenu className="hidden md:block">
-            <NavigationMenuList>
-              {MAIN_NAVIGATION_ITEMS.map((item) => (
-                <NavigationMenuItem key={item.name}>
-                  <Link href={item.href} legacyBehavior passHref>
-                    <NavigationMenuLink className="group inline-flex h-9 w-max items-center justify-center rounded-md bg-transparent px-4 py-2 text-sm font-medium transition-colors hover:bg-primary-foreground/10 hover:text-primary-foreground focus:bg-primary-foreground/10 focus:text-primary-foreground focus:outline-none disabled:pointer-events-none disabled:opacity-50 data-[active]:bg-primary-foreground/20 data-[state=open]:bg-primary-foreground/20">
-                      {item.name}
-                    </NavigationMenuLink>
-                  </Link>
-                </NavigationMenuItem>
-              ))}
-            </NavigationMenuList>
-          </NavigationMenu>
         </div>
 
         <div className="flex items-center gap-4">
@@ -96,30 +69,6 @@ export const Header = () => {
                       height={32}
                     />
                   </Link>
-                </div>
-
-                <div className="flex-1 overflow-y-auto">
-                  <nav className="flex flex-col">
-                    {MAIN_NAVIGATION_ITEMS.map((item) => (
-                      <Link
-                        key={item.name}
-                        href={item.href}
-                        className="px-6 py-4 text-xl font-normal hover:bg-white/5"
-                      >
-                        {item.name}
-                      </Link>
-                    ))}
-                    <div className="h-px bg-white/10 my-4" />
-                    {SECONDARY_NAVIGATION_ITEMS.map((item) => (
-                      <Link
-                        key={item.name}
-                        href={item.href}
-                        className="px-6 py-4 text-xl font-normal hover:bg-white/5"
-                      >
-                        {item.name}
-                      </Link>
-                    ))}
-                  </nav>
                 </div>
 
                 <div className="p-4 border-t border-white/10">

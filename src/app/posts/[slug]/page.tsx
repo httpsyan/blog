@@ -77,15 +77,17 @@ export default function PostPage({ params }: PostPageProps) {
               className="rounded-full mb-4"
             />
             <h2 className="text-2xl font-bold text-gray-900 mb-2">
-              {post.author.name}
+              Renato De Paula
             </h2>
-            <p className="text-lg text-gray-600 mb-4">Neurologista Infantil</p>
             <p className="text-gray-600 max-w-2xl">
-              Especialista em Neurologia Infantil, com vasta experiência no
-              tratamento de distúrbios neurológicos em crianças. Dedicado a
-              proporcionar o melhor cuidado e orientação para seus pacientes e
-              familiares.
+              Fisioterapeuta & Neurocientista PhD. Ex-Presidente da SUDERJ.
             </p>
+            <a
+              href="https://chat.whatsapp.com/LqQFY3EmdwN3zjrqwF0ihC"
+              className="text-blue-500 hover:underline"
+            >
+              WhatsApp
+            </a>
           </div>
         </div>
       </div>
